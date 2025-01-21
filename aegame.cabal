@@ -25,7 +25,9 @@ executable aegame
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5,
                        network >= 3.1 && < 3.2,
-                       bytestring
+                       bytestring,
+                       time,
+                       mtl
   ghc-options:         -Wall
                        -Wcompat
                        -Widentities

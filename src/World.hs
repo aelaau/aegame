@@ -1,23 +1,35 @@
 module World
-    ( GameState(..)
-    , initializeGame
+    ( World(..)
+    , initializeWorld
     , startGame
+    , updateWorld
+    , worldToString
     ) where
 
 import Player(Player(..))
 
 data State = Setup | Playing | Paused | Finished deriving (Show, Eq)
 
-data GameState = GameState
+data World = World
     { state :: State,
       player :: Player
     } deriving (Show)
 
-initializeGame :: Player -> GameState
-initializeGame newPlayer = GameState
+initializeWorld :: Player -> World
+initializeWorld newPlayer = World
     { state = Setup
     , player = newPlayer
     }
 
-startGame :: GameState -> GameState
-startGame gameState = gameState { state = Playing }
+startGame :: World -> World
+startGame world = world { state = Playing }
+
+updateWorld :: World -> World
+updateWorld world = world { player = updatedPlayer }
+  where
+    oldPlayer = player world
+    updatedPlayer = oldPlayer { playerMoney = playerMoney oldPlayer + 100 }
+    
+
+worldToString :: World -> String
+worldToString = show
