@@ -6,6 +6,7 @@ import qualified Data.ByteString.Char8 as BS
 import Control.Exception (bracket)
 import Control.Monad (forever)
 import Control.Monad.State
+import Data.Time
 
 import World
 import Player
@@ -14,7 +15,9 @@ type WorldM = StateT World IO
 
 main :: IO ()
 main = do
-  let initialWorld = initializeWorld (Player "Player 1" 100)
+  let startTimestamp = UTCTime (fromGregorian 2025 1 1) 0
+  let newPlayer = Player "Player 1" 100
+  let initialWorld = initializeWorld startTimestamp newPlayer
   let socketPath = "/tmp/aesock"
   runSocketGame socketPath initialWorld
 
@@ -48,4 +51,3 @@ tick = do
   world <- get
   let newWorld = updateWorld world
   put newWorld
-
